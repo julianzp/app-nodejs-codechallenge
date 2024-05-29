@@ -1,20 +1,20 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { ApiGatewayModule } from './apiGateway.module';
+import { Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(ApiGatewayModule);
 
-  const microservice = app.connectMicroservice({
-      transport: Transport.KAFKA,
-      options: {
-        client: {
-          brokers: ['localhost:9092'],
-        },
-        consumer: {
-          groupId: 'apigateway-consumer',
-        },
+  app.connectMicroservice({
+    transport: Transport.KAFKA,
+    options: {
+      client: {
+        brokers: ['localhost:9092'],
       },
+      consumer: {
+        groupId: 'apigateway-consumer',
+      },
+    },
   });
 
   await app.startAllMicroservices();

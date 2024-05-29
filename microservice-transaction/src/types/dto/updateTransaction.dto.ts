@@ -1,4 +1,3 @@
-
 import { IsEnum, IsNotEmpty, IsUUID } from 'class-validator';
 
 export class UpdateTransactionDto {

@@ -1,5 +1,8 @@
 export class GetAntifraudValidation {
- constructor(public readonly value: number, public readonly status: string) {}
+  constructor(
+    public readonly value: number,
+    public readonly status: string
+  ) {}
 
   toString() {
     return JSON.stringify({

@@ -1,7 +1,10 @@
-import { STATUS } from "../enum/status.enum";
+import { STATUS } from '../enum/status.enum';
 
 export class GetAntifraudValidation {
- constructor(public readonly value: number, public readonly status: STATUS) {}
+  constructor(
+    public readonly value: number,
+    public readonly status: STATUS
+  ) {}
 
   toString() {
     return JSON.stringify({

@@ -26,6 +26,5 @@ import { TransactionRepository } from './repository/transaction.repository';
   ],
   controllers: [TransactionController],
   providers: [TransactionService, TransactionRepository],
-
 })
 export class TransactionModule {}
