@@ -21,7 +21,7 @@ export class TransactionRepository {
         });
     }
 
-    findById(id: string): Promise<Transaction | null> {
+    getById(id: string): Promise<Transaction | null> {
 
         const record = this.prisma.transaction.findFirst({
         where: {  id },

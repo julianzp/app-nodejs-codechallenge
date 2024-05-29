@@ -3,7 +3,7 @@ import { TransactionService } from '../service/transaction.service';
 import { ClientKafka, EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
 
 @Controller()
-export class AppController implements OnModuleInit{
+export class TransactionController implements OnModuleInit{
   constructor(private readonly transactionService: TransactionService, @Inject('ANTIFRAUD') private readonly antifraudClient: ClientKafka) {}
   onModuleInit() {
     this.antifraudClient.subscribeToResponseOf('get_antifraud_validation');
@@ -16,7 +16,7 @@ export class AppController implements OnModuleInit{
 
   @MessagePattern('get_transaction_by_id')
   findTransactionById(@Payload('id') id: string) {
-    return this.transactionService.findById(id);
+    return this.transactionService.getById(id);
   }
 
 }

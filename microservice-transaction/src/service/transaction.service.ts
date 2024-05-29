@@ -30,15 +30,17 @@ export class TransactionService {
         );
 
         console.log(`Antifraud service has validated the transaction with status: ${validation}`);
+        
+        // Update transaction's status
         return await this.transactionRepository.updateTransaction({ id: transactioncreated.id, status: validation });
     }
 
-  findById(id: string) {
-    return from(this.transactionRepository.findById(id)).pipe(
+  getById(id: string) {
+    return from(this.transactionRepository.getById(id)).pipe(
       map((transaction) => {
         if (!transaction) {
           throw new NotFoundException(
-            `The transaction with id ${id} not found`,
+            `The transaction could not be found with id: ${id}}`,
           );
         }
         return JSON.stringify(transactionMapper(transaction as any));

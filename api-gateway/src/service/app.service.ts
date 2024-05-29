@@ -1,9 +1,8 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
-import { CreateTransactionEvent, getTransactionEvent } from '../types/create-transaction.event';
-import { CreateTransactionDto, GetTransactionDto, GetTransactionEvent } from '../types/transaction.dto';
-import { Observable, catchError, firstValueFrom, lastValueFrom, of, tap } from 'rxjs';
-import { mapTransactionEventToDto } from '../mappers/transactionMapper';
+import { CreateTransactionEvent, getTransactionEvent } from '../types/createTransactionEvent';
+import { CreateTransactionDto, GetTransactionDto } from '../types/transaction.dto';
+import { Observable, catchError, of } from 'rxjs';
 
 @Injectable()
 export class AppService   {
@@ -14,8 +13,7 @@ export class AppService   {
     this.transactionClient.subscribeToResponseOf('get_transaction_by_id');
   }
 
-
-  async sendTransactionStatus(createTransaction: CreateTransactionDto): Promise<any> {
+  async sendTransactionStatus(createTransaction: CreateTransactionDto): Promise<Observable<GetTransactionDto>> {
     const event = new CreateTransactionEvent(
       createTransaction.accountExternalIdCredit,
       createTransaction.accountExternalIdDebit,
@@ -23,8 +21,11 @@ export class AppService   {
       createTransaction.value
     ).toString();
 
-    return this.transactionClient.send('transaction_created', event);
-  }
+    return this.transactionClient.send<GetTransactionDto>('transaction_created', event)
+    .pipe(
+        catchError(() => of(null)),
+        );
+    }
 
   async getTransactionById(transactionExternalId: string): Promise<Observable<GetTransactionDto>> {
 
