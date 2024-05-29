@@ -12,6 +12,8 @@ import {
   MessagePattern,
   Payload,
 } from '@nestjs/microservices';
+import { CreateTransactionDto } from 'src/types/dto/createTransaction.dto';
+import { CreateTransactionEvent } from 'src/types/dto/createTransaction.event';
 
 @Controller()
 export class TransactionController implements OnModuleInit {
@@ -24,8 +26,8 @@ export class TransactionController implements OnModuleInit {
   }
 
   @MessagePattern('transaction_created')
-  createTransaction(data: any) {
-    this.transactionService.createTransaction(data);
+  createTransaction(createTransaction: CreateTransactionEvent) {
+    this.transactionService.createTransaction(createTransaction);
   }
 
   @MessagePattern('get_transaction_by_id')

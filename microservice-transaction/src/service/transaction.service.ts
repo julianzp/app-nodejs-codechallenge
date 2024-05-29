@@ -9,6 +9,7 @@ import {
   transactionMapper,
 } from 'src/mappers/transaction.mapper';
 import { catchError, from, lastValueFrom, map, throwError } from 'rxjs';
+import { CreateTransactionDto } from 'src/types/dto/createTransaction.dto';
 
 @Injectable()
 export class TransactionService {
@@ -20,7 +21,7 @@ export class TransactionService {
   //Event handler, it manages the event with an specific pattern and saves transaction into DB
   async createTransaction(
     createdTransaction: CreateTransactionEvent
-  ): Promise<any> {
+  ): Promise<CreateTransactionDto> {
     const transactioncreated =
       await this.transactionRepository.createTransaction(
         mapEventToDto(createdTransaction)
