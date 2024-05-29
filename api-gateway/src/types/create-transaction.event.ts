@@ -13,3 +13,13 @@ export class CreateTransactionEvent {
     });
   }
 }
+
+export class getTransactionEvent {
+    constructor(public readonly id: string){}
+
+  toString() {
+    return JSON.stringify({
+      id: this.id,
+    });
+  }
+}

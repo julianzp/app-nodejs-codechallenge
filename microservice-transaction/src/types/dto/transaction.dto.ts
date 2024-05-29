@@ -6,6 +6,23 @@ export class CreateTransactionDto {
    value: number;
 }
 
+export interface GetTransactionDto {
+
+   transactionExternalId: string;
+   transactionType:  {name: string}
+   transactionStatus: {
+      name: string
+    }
+   value: number;
+   createdAt: Date;
+}
+
+export interface TransactionType {
+    id: string,
+    code?: string,
+    name?: string
+}
+
 export class GetTransactionEvent {
   constructor(
     public readonly transactionExternalId: string,
@@ -24,17 +41,4 @@ export class GetTransactionEvent {
       createdAt: this.createdAt,
     });
   }
-}
-
-export class GetTransactionDto {
-
-   transactionExternalId: string;
-   transactionType:  {
-     name: string
-   }
-   transactionStatus: {
-      name: string
-    }
-   value: number;
-   createdAt: Date;
 }

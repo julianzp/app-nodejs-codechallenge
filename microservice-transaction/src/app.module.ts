@@ -1,27 +1,31 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './controller/app.controller';
-import { AppService } from './service/app.service';
+import { TransactionService } from './service/transaction.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { PrismaModule } from './prisma/prisma.module';
+import { TransactionRepository } from './repository/transaction.repository';
 
 @Module({
   imports: [
     ClientsModule.register([
       {
-        name: 'TRANSACTION',
+        name: 'ANTIFRAUD',
         transport: Transport.KAFKA,
         options: {
           client: {
-            clientId: 'transaction',
+            clientId: 'antifraud',
             brokers: ['localhost:9092'],
           },
           consumer: {
-            groupId: 'transaction-consumer',
+            groupId: 'antifraud-consumer',
           },
         },
       },
     ]),
+    PrismaModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [TransactionService, TransactionRepository],
+
 })
 export class AppModule {}
