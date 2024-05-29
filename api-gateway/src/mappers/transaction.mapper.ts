@@ -1,6 +1,11 @@
-import { GetTransactionDto, GetTransactionEvent } from "src/types/transaction.dto";
+import {
+  GetTransactionDto,
+  GetTransactionEvent,
+} from 'src/types/transaction.dto';
 
-export function mapTransactionEventToDto(event: GetTransactionEvent): GetTransactionDto {
+export function mapTransactionEventToDto(
+  event: GetTransactionEvent
+): GetTransactionDto {
   return {
     transactionExternalId: event.transactionExternalId,
     transactionType: { name: event.transactionType },

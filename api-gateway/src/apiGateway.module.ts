@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './controller/app.controller';
-import { AppService } from './service/app.service';
+import { ApiGatewayController } from './controller/apiGateway.controller';
+import { ApiGatewayService } from './service/apiGateway.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
@@ -21,7 +21,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
       },
     ]),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [ApiGatewayController],
+  providers: [ApiGatewayService],
 })
-export class AppModule {}
+export class ApiGatewayModule {}

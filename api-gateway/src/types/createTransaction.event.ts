@@ -1,8 +1,10 @@
 export class CreateTransactionEvent {
-    constructor(public readonly accountExternalIdDebit: string,
+  constructor(
+    public readonly accountExternalIdDebit: string,
     public readonly accountExternalIdCredit: string,
     public readonly tranferTypeId: number,
-    public readonly value: number){}
+    public readonly value: number
+  ) {}
 
   toString() {
     return JSON.stringify({
@@ -15,7 +17,7 @@ export class CreateTransactionEvent {
 }
 
 export class getTransactionEvent {
-    constructor(public readonly id: string){}
+  constructor(public readonly id: string) {}
 
   toString() {
     return JSON.stringify({

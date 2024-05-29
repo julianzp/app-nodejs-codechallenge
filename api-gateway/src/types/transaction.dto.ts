@@ -1,9 +1,8 @@
 export class CreateTransactionDto {
-
-   accountExternalIdDebit: string;
-   accountExternalIdCredit: string;
-   tranferTypeId: number;
-   value: number;
+  accountExternalIdDebit: string;
+  accountExternalIdCredit: string;
+  tranferTypeId: number;
+  value: number;
 }
 
 export class GetTransactionEvent {
@@ -27,14 +26,13 @@ export class GetTransactionEvent {
 }
 
 export class GetTransactionDto {
-
-   transactionExternalId: string;
-   transactionType:  {
-     name: string
-   }
-   transactionStatus: {
-      name: string
-    }
-   value: number;
-   createdAt: Date;
+  transactionExternalId: string;
+  transactionType: {
+    name: string;
+  };
+  transactionStatus: {
+    name: string;
+  };
+  value: number;
+  createdAt: Date;
 }

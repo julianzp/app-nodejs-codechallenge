@@ -3,7 +3,7 @@ import { Decimal } from '@prisma/client/runtime/library';
 export type InputTransactionType = {
   id: string;
   status: string;
-  value: Decimal;
+  value: number;
   transactionType: TransactionType;
   createdAt: Date;
 };
@@ -13,8 +13,10 @@ type TransactionType = {
 };
 
 export class CreateTransactionEvent {
-    constructor(public readonly accountExternalIdDebit: string,
+  constructor(
+    public readonly accountExternalIdDebit: string,
     public readonly accountExternalIdCredit: string,
     public readonly tranferTypeId: number,
-    public readonly value: number){}
+    public readonly value: number
+  ) {}
 }
