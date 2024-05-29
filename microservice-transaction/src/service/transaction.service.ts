@@ -1,11 +1,12 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { CreateTransactionEvent } from '../create-transaction.event';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { CreateTransactionEvent } from '../types/dto/create-transaction.event';
 import { ClientKafka } from '@nestjs/microservices';
 import { GetAntifraudValidation } from '../types/dto/get-antifraud-validation.dto';
 import { STATUS } from '../types/enum/status.enum';
 import { TransactionRepository } from 'src/repository/transaction.repository';
-import { mapEventToDto } from 'src/mappers/transaction.mapper';
-import { lastValueFrom } from 'rxjs';
+import { mapEventToDto, transactionMapper } from 'src/mappers/transaction.mapper';
+import { catchError, from, lastValueFrom, map, throwError } from 'rxjs';
+import { GetTransactionDto, GetTransactionEvent } from 'src/types/dto/transaction.dto';
 
 
 
@@ -19,7 +20,7 @@ export class TransactionService {
 
 
   //Event handler, it manages the event with an specific pattern and saves transaction into DB
-    async handleTransactionCreated(createdTransaction: CreateTransactionEvent) {
+    async handleTransactionCreated(createdTransaction: CreateTransactionEvent): Promise<any> {
 
         const transactioncreated = await this.transactionRepository.createTransaction(mapEventToDto(createdTransaction));
 
@@ -29,8 +30,27 @@ export class TransactionService {
         );
 
         console.log(`Antifraud service has validated the transaction with status: ${validation}`);
-
-        await this.transactionRepository.updateTransaction({ id: transactioncreated.id, status: validation });
-        
+        return await this.transactionRepository.updateTransaction({ id: transactioncreated.id, status: validation });
     }
+
+  findById(id: string) {
+    return from(this.transactionRepository.findById(id)).pipe(
+      map((transaction) => {
+        if (!transaction) {
+          throw new NotFoundException(
+            `The transaction with id ${id} not found`,
+          );
+        }
+        return JSON.stringify(transactionMapper(transaction as any));
+      }),
+      catchError((e) => {
+        throw throwError(() => e);
+      }),
+    );
+  }
+
 }
+
+
+
+

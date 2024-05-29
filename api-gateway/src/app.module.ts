@@ -1,10 +1,10 @@
-import { DynamicModule, Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ClientsModule, ClientsModuleOptions, Transport } from '@nestjs/microservices';
+import { Module } from '@nestjs/common';
+import { AppController } from './controller/app.controller';
+import { AppService } from './service/app.service';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
-imports: [
+  imports: [
     ClientsModule.register([
       {
         name: 'TRANSACTION',

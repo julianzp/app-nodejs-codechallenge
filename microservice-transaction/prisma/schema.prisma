@@ -26,7 +26,7 @@ model Transaction {
   id                      String          @id @default(uuid())
   accountExternalIdDebit  String          @map("account_external_id_debit") @db.VarChar(255)
   accountExternalIdCredit String          @map("account_external_id_credit") @db.VarChar(255)
-  value                   Decimal         @db.Decimal(10, 2)
+  value                   Int             @db.Integer()
   status                  String          @default("pending")
   createdAt               DateTime        @default(now()) @map("created_at")
   updatedAt               DateTime        @updatedAt @map("updated_at")
